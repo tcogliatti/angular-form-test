@@ -1,0 +1,76 @@
+<h1 class="mt-5">Paso 1 - Datos personales</h1>
+<form>
+    <div>
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" [(ngModel)]="personalData.nombres">
+
+            <label for="apellido">Apellido</label>
+            <input type="text" name="apellido" ide="apellido" [(ngModel)]="personalData.apellido">
+
+            <label for="nombreAuto">Nombre Autopercibido</label>
+            <input type="text" name="nombreAuto" id="nombreAuto" [(ngModel)]="personalData.nombreautopercibido">
+
+            <label for="fechaNac">Fecha de Nacimiento</label>
+            <input type="date" name="fechaNac" id="fechaNac" [max]="fechaNacimiento.maxDate" [min]="fechaNacimiento.minDate" [(ngModel)]="personalData.fecnac">
+
+            <label for="cuit">CUIT / CUIL</label>
+            <input type="number" name="cuit" id="cuit" [(ngModel)]="personalData.nrofiscal">
+
+            <div class="d-flex mt-2">
+                <input type="checkbox" id="tieneHjos" name="tienehijos" [(ngModel)]="personalData.tienehijos">
+                <label for="tieneHjos" class="ms-2">Tiene Hijos</label>
+            </div>
+        </div>
+        <div>
+            <label for="genero">Género</label>
+            <select name="genero" id="genero" [(ngModel)]="personalData.sexo">
+                <option value="no" selected disabled>Seleccione Género</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="coso">Coso</option>
+            </select>
+
+            <label for="pais">Nacionalidad</label>
+            <select name="pais" id="pais" [(ngModel)]="personalData.pais">
+                <option value="no" selected disabled>Seleccione Nacionalidad</option>
+                <option *ngFor="let pais of paises" [value]="pais.idPais">{{pais.descripcion}}</option>
+            </select>
+
+            <label for="tipoDoc">Tipo de documento</label>
+            <select name="tipoDoc" id="tipoDoc" [(ngModel)]="personalData.tipoDoc">
+                <option value="no" selected disabled>Seleccione Tipo de Documento</option>
+                <option value="DNI">DNI</option>
+                <option value="LE">LE</option>
+                <option value="LC">LC</option>
+            </select>
+
+            <label for="dni">Número de documento</label>
+            <input type="number" name="dni" id="dni" [(ngModel)]="personalData.nrodoc">
+
+            <label for="estadoCivil">Estado civil</label>
+            <select name="estadoCivil" id="estadoCivil" [(ngModel)]="personalData.estadoCivil">
+                <option value="no" selected disabled>Seleccione estadi civil</option>
+                <option value="01">Soltero</option>
+                <option value="02">Casado</option>
+                <option value="03">Divorciado</option>
+                <option value="04">Concubinato</option>
+            </select>
+
+            <div class="d-flex mt-2">
+                <input type="checkbox" id="tieneLicencia" name="tienelicencia" [(ngModel)]="personalData.tienelicencia">
+                <label for="tieneLicencia" class="ms-2">Tiene Licencia</label>
+            </div>
+        </div>
+    </div>
+
+    <label for="foto" class="mt-2">Foto de perfil</label>
+    <input type="text" value="/coso/casco/perro.jpg" name="foto" [(ngModel)]="personalData.foto">
+
+    <div>
+        <button (click)='send()' [routerLink]="['/second-form']">Siguiente</button>
+    </div>
+
+</form>
+
+{{personalData | json}}

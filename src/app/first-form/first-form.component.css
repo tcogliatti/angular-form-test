@@ -1,0 +1,21 @@
+form > div{
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+form div button {
+    margin-top: 60px;
+    width: 300px;
+}
+form select { 
+    width: 100%;
+}
+form > div > div{
+ width: 50%;
+}
+input { 
+    width: 100%;
+}
+#tieneLicencia, #tieneHjos {
+    width: .1px;
+}

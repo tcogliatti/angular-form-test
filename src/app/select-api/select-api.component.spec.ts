@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { SelectApiComponent } from './select-api.component';
+
+describe('SelectApiComponent', () => {
+  let component: SelectApiComponent;
+  let fixture: ComponentFixture<SelectApiComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ SelectApiComponent ]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(SelectApiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
