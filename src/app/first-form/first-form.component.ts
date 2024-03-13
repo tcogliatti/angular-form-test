@@ -36,14 +36,20 @@ export class FirstFormComponent implements OnInit {
     }
   }
 
+  /**
+   * verifica si hay datos almacenados en local sotrage, en caso que existan los bindea con personalData
+   */
   ngOnInit(): void {
     const personalDataJSON = localStorage.getItem('personalDataForm')
-    if(personalDataJSON != null){
-      this.personalData = { ... JSON.parse(personalDataJSON)}
+    if (personalDataJSON != null) {
+      this.personalData = { ...JSON.parse(personalDataJSON) }
     }
     this.getPais();
   }
-  
+
+  /**
+   * Trae del backend los paises disponibles para el select nacionalidad
+   */
   getPais(): void {
     this.http.get<any>(`${API_BASE}/${API_PATH.NACIONALIDAD}`).subscribe(
       (response) => {
@@ -55,16 +61,29 @@ export class FirstFormComponent implements OnInit {
     )
   }
 
+  /**
+   * Muestra por consola el error del get
+   * @param error 
+   */
   handleError(error: any): void {
     console.log("error al obtener datos", error);
   }
 
+  /**
+   * Guarda en local storage los datos del formulario
+   */
   send(): void {
     console.log(this.personalData);
     const personalDataJSON = JSON.stringify(this.personalData);
     localStorage.setItem('personalDataForm', personalDataJSON);
   }
 
+  /**
+   * calcula una fecha de nacimiento usando dos datos: el día de hoy y una entero que determina los años hacia atrás
+   * este datos e usa para los limites de la fecha de nacimineto del input del calendario
+   * @param years años 
+   * @returns un string con la fecha
+   */
   private calculateDate(years: number): string {
     const fechaActual = new Date();
     // Restar X años a la fecha actual
