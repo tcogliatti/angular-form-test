@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DatosPersonales } from '../interfaces/DatosPersonales';
-import { HttpClient } from '@angular/common/http';
+import { PerfilPostulante } from '../interfaces/PerfilPostulante';
 import { API_BASE, API_PATH, EDADES } from 'src/constants';
 import { Pais } from '../interfaces/Paises';
+import { TiposDoc } from '../interfaces/TiposDoc';
+import { EstadoCivil } from '../interfaces/EstadoCivil';
+import { OpcionesService } from '../service/opciones-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-first-form',
@@ -11,14 +14,23 @@ import { Pais } from '../interfaces/Paises';
 })
 
 export class FirstFormComponent implements OnInit {
-  personalData: DatosPersonales;
+  personalData: PerfilPostulante;
   paises: Pais[] = [];
+  tiposDoc: TiposDoc[] = [];
+  tiposEstadoCivil: EstadoCivil[] = [];
+  private subscriptions: Subscription[] = [];
   fechaNacimiento: any = {
     maxDate: this.calculateDate(EDADES.MINIMA_EDAD),
     minDate: this.calculateDate(EDADES.MAXIMA_EDAD)
   }
 
-  constructor(private http: HttpClient) {
+  /**
+   * Inicializar el 
+   * @paramOpcionService
+   */
+  constructor(
+    private OpcionService: OpcionesService
+  ) {
     this.personalData = {
       nombres: '',
       apellido: '',
@@ -32,7 +44,19 @@ export class FirstFormComponent implements OnInit {
       estadoCivil: NaN,
       foto: '',
       tienelicencia: false,
-      tienehijos: false
+      tienehijos: false,
+      celular: NaN,
+      telefono: NaN,
+      mail: '',
+      numcalle: NaN,
+      provincia: NaN,
+      partido: NaN,
+      localidad: NaN,
+      calle: NaN,
+      filesize: NaN,
+      otroGenero: '',
+      rutacv: '',
+      estado: true
     }
   }
 
@@ -40,33 +64,30 @@ export class FirstFormComponent implements OnInit {
    * verifica si hay datos almacenados en local sotrage, en caso que existan los bindea con personalData
    */
   ngOnInit(): void {
+    // obtiene y actualiza adatos desde localStorage
     const personalDataJSON = localStorage.getItem('personalDataForm')
     if (personalDataJSON != null) {
       this.personalData = { ...JSON.parse(personalDataJSON) }
     }
-    this.getPais();
-  }
 
-  /**
-   * Trae del backend los paises disponibles para el select nacionalidad
-   */
-  getPais(): void {
-    this.http.get<any>(`${API_BASE}/${API_PATH.NACIONALIDAD}`).subscribe(
-      (response) => {
-        this.paises = response
-      },
-      (error) => {
-        this.handleError(error)
-      }
-    )
+    // obtiene datos para select
+    this.subscriptions.push(this.OpcionService.getData(`${API_BASE}/${API_PATH.NACIONALIDAD}`).subscribe(
+      data => {
+        this.paises = data;
+      }));
+    this.subscriptions.push(this.OpcionService.getData(`${API_BASE}/${API_PATH.TIPO_DNI}`).subscribe(
+      data => {
+        this.tiposDoc = data;
+      }));
+    this.subscriptions.push(this.OpcionService.getData(`${API_BASE}/${API_PATH.ESTADO_CIVIL}`).subscribe(
+      data => {
+        this.tiposEstadoCivil = data;
+      }));
   }
-
-  /**
-   * Muestra por consola el error del get
-   * @param error 
-   */
-  handleError(error: any): void {
-    console.log("error al obtener datos", error);
+  gnOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    });
   }
 
   /**

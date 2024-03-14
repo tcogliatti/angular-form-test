@@ -1,1 +1,58 @@
-<p>second-form works!</p>
+<h1 class="mt-5">Paso 2 - Datos de contacto</h1>
+<form class="mb-5">
+    <div>
+        <div>
+            <label for="telefono">Telefono de contato</label>
+            <input type="number" name="telefono" id="telefono" [(ngModel)]="personalData.telefono">
+
+            <label for="email">Apellido</label>
+            <input type="email" name="email" id="email" [(ngModel)]="personalData.mail">
+
+            <label for="partido">Partido</label>
+            <select name="partido" id="partido" [(ngModel)]="personalData.partido">
+                <option value="no" selected disabled>Seleccione Partido</option>
+                <option *ngFor="let part of partidos" [value]="part.idpartido">{{part.descripcion}}</option>
+            </select>
+
+            <label for="calle">Calle</label>
+            <select name="calle" id="calle" [(ngModel)]="personalData.calle">
+                <option value="no" selected disabled>Seleccione Calle</option>
+                <option *ngFor="let calle of calles" [value]="calle.idCalle">{{calle.descripcion}}</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="celular">Número de celular</label>
+            <input type="number" name="celular" id="celular" [(ngModel)]="personalData.celular">
+
+            <label for="provincia">Provincia</label>
+            <select name="provincia" id="provincia" [(ngModel)]="personalData.provincia">
+                <option value="no" selected disabled>Seleccione Provincia</option>
+                <option *ngFor="let provincia of provincias" [value]="provincia.idProvincia">{{provincia.descripcion}}</option>
+            </select>
+
+
+            <label for="localidad">Localidad</label>
+            <select name="localidad" id="localidad" [(ngModel)]="personalData.localidad">
+                <option value="no" selected disabled>Seleccione Localidad/option>
+                <option *ngFor="let localidad of localidades" [value]="localidad.idLocalidad">{{localidad.descripcion}}</option>
+            </select>
+
+            <label for="numero">Numero</label>
+            <input type="number" name="numero" id="numero" [(ngModel)]="personalData.numcalle">
+
+
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <button class="btn btn-info" (click)='save()'[routerLink]="['/first-form']">Volver</button>
+        <!-- <button (click)='send()' [routerLink]="['/second-form']">Enviar</button> -->
+        <button (click)='send()'>Enviar</button>
+    </div>
+    <div class="align-items-center mt-1">
+        <button class="btn btn-danger">Cancelar</button>
+    </div>
+
+
+</form>

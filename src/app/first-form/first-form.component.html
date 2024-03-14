@@ -1,5 +1,5 @@
 <h1 class="mt-5">Paso 1 - Datos personales</h1>
-<form>
+<form class="mb-5">
     <div>
         <div>
             <label for="nombre">Nombre</label>
@@ -40,9 +40,7 @@
             <label for="tipoDoc">Tipo de documento</label>
             <select name="tipoDoc" id="tipoDoc" [(ngModel)]="personalData.tipoDoc">
                 <option value="no" selected disabled>Seleccione Tipo de Documento</option>
-                <option value="DNI">DNI</option>
-                <option value="LE">LE</option>
-                <option value="LC">LC</option>
+                <option *ngFor="let docs of tiposDoc" [value]="docs.idtipodoc">{{docs.codigo}} | {{docs.descricion}}</option>
             </select>
 
             <label for="dni">Número de documento</label>
@@ -51,10 +49,8 @@
             <label for="estadoCivil">Estado civil</label>
             <select name="estadoCivil" id="estadoCivil" [(ngModel)]="personalData.estadoCivil">
                 <option value="no" selected disabled>Seleccione estadi civil</option>
-                <option value="01">Soltero</option>
-                <option value="02">Casado</option>
-                <option value="03">Divorciado</option>
-                <option value="04">Concubinato</option>
+                <option *ngFor="let estCiv of tiposEstadoCivil" [value]="estCiv.idEstadoCivil">{{estCiv.descripcion}}</option>
+               
             </select>
 
             <div class="d-flex mt-2">
@@ -68,9 +64,8 @@
     <input type="text" value="/coso/casco/perro.jpg" name="foto" [(ngModel)]="personalData.foto">
 
     <div>
+        <button class="btn btn-danger">Cancelar</button>
         <button (click)='send()' [routerLink]="['/second-form']">Siguiente</button>
     </div>
 
 </form>
-
-{{personalData | json}}

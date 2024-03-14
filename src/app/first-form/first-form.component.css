@@ -17,5 +17,15 @@ input {
     width: 100%;
 }
 #tieneLicencia, #tieneHjos {
-    width: .1px;
+    width:  1px;
+}
+.cancel-btn{
+    background: rgba(216, 0, 79, 0.7);
+    color: rgb(189, 188, 188);
+    border: 1px solid rgb(189, 188, 188);
+}
+.cancel-btn:hover{
+    background: rgba(196, 87, 127, 0.7);
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
 }
